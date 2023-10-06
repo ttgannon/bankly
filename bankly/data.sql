@@ -1,4 +1,5 @@
 
+\c bankly
 CREATE TABLE users (
     username text PRIMARY KEY,
     first_name text NOT NULL,

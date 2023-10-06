@@ -3,8 +3,9 @@
 const express = require('express');
 const app = express();
 const ExpressError = require("./helpers/expressError");
+const bodyParser = require("body-parser");
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 const authRoutes = require('./routes/auth');
@@ -12,6 +13,7 @@ const userRoutes = require('./routes/users');
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+
 
 /** 404 handler */
 
@@ -24,7 +26,7 @@ app.use(function(req, res, next) {
 
 /** general error handler */
 
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
 
   return res.json({
@@ -32,7 +34,5 @@ app.use(function(err, req, res, next) {
     message: err.message
   });
 });
-
-module.exports = app;
 
 module.exports = app;
