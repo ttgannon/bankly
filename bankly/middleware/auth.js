@@ -47,6 +47,7 @@ function requireAdmin(req, res, next) {
 function authUser(req, res, next) {
   try {
     const token = req.body._token || req.query._token;
+    //FIXES SECURITY ISSUE/BUG #2
     const tokenVerify = jwt.verify(token, SECRET_KEY)
     if (tokenVerify) {
       let payload = jwt.decode(token);
