@@ -7,4 +7,3 @@ In middleware/auth.js line 49, there is no verification of the token; the app si
 ##Bug 3
 In routes/users.js, the docstrings say it should return only basic information but it returns more; modified method in models/user.js to only return the requested info.
 
-##Bug 4

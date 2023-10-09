@@ -1,5 +1,4 @@
-
-\c bankly
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     username text PRIMARY KEY,
     first_name text NOT NULL,

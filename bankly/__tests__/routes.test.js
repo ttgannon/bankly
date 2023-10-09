@@ -90,6 +90,17 @@ describe("POST /auth/login", function() {
     expect(username).toBe("u1");
     expect(admin).toBe(false);
   });
+//BUG TEST #2 and #1
+  test("should not allow incorrect username/password to log in", async function () {
+    const response = await request(app)
+      .post("/auth/login")
+      .send({
+        username: "false",
+        password: "false"
+      });
+    expect(response.statusCode).toBe(401);
+    expect(response.body).toEqual({ message: "Cannot authenticate", status: 401 });
+  })
 });
 
 describe("GET /users", function() {
@@ -104,6 +115,30 @@ describe("GET /users", function() {
       .send({ _token: tokens.u1 });
     expect(response.statusCode).toBe(200);
     expect(response.body.users.length).toBe(3);
+  });
+//fixes BUG 3
+  test("should list all users only basic info", async function() {
+    const response = await request(app)
+      .get("/users")
+      .send({ _token: tokens.u1 });
+    expect(response.body).toEqual({users: [
+      {
+        "first_name": "fn1",
+        "last_name": "ln1",
+        "username": "u1"
+      },
+      {
+        "first_name": "fn2",
+        "last_name": "ln2",
+        "username": "u2"
+      },
+      {
+        "first_name": "fn3",
+        "last_name": "ln3",
+        "username": "u3"
+      }
+
+    ]});
   });
 });
 
